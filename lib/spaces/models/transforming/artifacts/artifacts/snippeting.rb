@@ -1,5 +1,7 @@
 module Artifacts
   module Snippeting
+    include ::Transforming::Precedence
+    #FIX: this code is where the stanza vs adapter confusion begins
 
     def snippets =
       no_stanzas? ? snippets_here : stanzas.map(&:snippets)
@@ -30,11 +32,6 @@ module Artifacts
 
     def stanza_class_for(qualifier)
       class_for(:artifacts, compute_qualifier, :stanzas, qualifier)
-    # rescue NameError => e
-    #   warn(error: e, method: :stanza_class_for,
-    #     elements: nesting_elements, identifier: emission.identifier
-    #   )
-    #   class_for(nesting_elements.drop(1), :stanzas, qualifier)
     end
 
   end
