@@ -42,7 +42,7 @@ module Artifacts
           # def qualification_for(attachable, type=nil) =
           #   [resource_identifier, super(attachable), type_for(type),].compact.join('_').as_cloud_formation_name
 
-          def configuration_hash = super.without(:assign_public_ip)
+          def configuration_hash = super.without(:assign_public_ip).merge(service_name: resource_identifier)
 
         end
 

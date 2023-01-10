@@ -10,12 +10,15 @@ module Artifacts
               container_service_cluster: :'ECS::Cluster',
               container_task_definition: :'ECS::TaskDefinition',
 
+              container_registry: :'ECR::Repository',
+
               load_balancer: :'ElasticLoadBalancingV2::LoadBalancer',
               load_balancer_listener: :'ElasticLoadBalancingV2::Listener',
               load_balancer_target_group: :'ElasticLoadBalancingV2::TargetGroup',
 
               iam_role: :'IAM::Role',
               iam_role_policy: :'IAM::RolePolicy',
+              iam_role_policy_attachment: :'IAM::Policy',
 
               vpc: :'EC2::VPC',
               subnet: :'EC2::Subnet',
@@ -24,6 +27,8 @@ module Artifacts
               nat_gateway: :'EC2::NatGateway',
               route_table: :'EC2::RouteTable',
               route_table_association: :'EC2::SubnetRouteTableAssociation',
+
+              acm_certificate: :'ACM::Certificate',
 
               cluster_key: :'KMS::Key',
               log_group: :'Logs::LogGroup',

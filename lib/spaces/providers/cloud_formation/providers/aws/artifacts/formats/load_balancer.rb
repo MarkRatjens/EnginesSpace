@@ -22,8 +22,8 @@ module Artifacts
           def dependency_identifiers =
             [subnet_identifiers, security_group_identifiers].flatten
 
-          def qualification_for(identifier, type) =
-            [identifier, type].join('_').underscore.camelize
+          # def qualification_for(identifier, type) =
+          #   [identifier, type].join('_').underscore.camelize
 
         end
       end

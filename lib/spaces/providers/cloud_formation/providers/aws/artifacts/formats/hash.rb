@@ -22,14 +22,14 @@ module Artifacts
 
           def all_the_snippets =
             [
-              name_snippet,
+              # name_snippet,
               dependency_snippet,
               configuration_snippet,
               tags_snippet
             ].compact
-
-          def name_snippet =
-            {name: resource_identifier}
+          #
+          # def name_snippet =
+          #   {name: resource_identifier}
 
           def dependency_snippet = {}
 
