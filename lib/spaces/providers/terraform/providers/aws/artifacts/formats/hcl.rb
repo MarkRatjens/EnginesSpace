@@ -14,7 +14,7 @@ module Artifacts
               }
             )
 
-          def resource_identifier = super.abbreviated_to(maximum_identifier_length)
+          def resource_identifier = super.abbreviated(l: maximum_identifier_length)
 
           def name_snippet =
             %(name = "#{resource_identifier}")
@@ -28,7 +28,7 @@ module Artifacts
           def more_snippets = nil
 
           def qualification_for(attachable) =
-            super.hyphenated.abbreviated_to(maximum_identifier_length)
+            super.hyphenated.abbreviated(l: maximum_identifier_length)
 
           def maximum_identifier_length = 32
 

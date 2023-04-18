@@ -1,34 +1,51 @@
 module Abbreviating
 
-  def abbreviated_to(l, separator = '-')
-    s = abbreviation_methods(l, separator).reduce(self) do |m, args|
-      m.length > l ? m.send(*args) : m
+  def abbreviated(l: 32, segment_length: 4, separator: '-', calls: nil) =
+    calls_signatures_for(l, segment_length, separator, calls).reduce(self) do |r, args|
+      r.length > l ? r.send(*args) : r
     end
-  end
 
-  def abbreviation_methods(l, separator = '-')
+  def calls_signatures_for(l, segment_length, separator, calls) =
+    (calls || default_calls).map do |c|
+      [c, call_signatures(l, segment_length, separator)[c]].flatten
+    end
+
+
+  def default_calls =
     [
-      [:no_vowels_except_after, separator],
-      [:segments_trancated_to, 4],
-      [:without_delimiter, separator],
-      [:[], 0, l - 1]
+      :no_vowels_except_after,
+      :segments_truncated_to,
+      :without_separator,
+      :enforce
     ]
-  end
 
-  def no_vowels_except_after(separator) =
-    split(separator).map(&:no_nonleading_vowels).join(separator)
+  def call_signatures(l, segment_length, separator) =
+    {
+      no_vowels_except_after: [separator, segment_length],
+      segments_truncated_to: [segment_length, separator],
+      without_separator: separator,
+      enforce: l
+    }
 
-  def segments_trancated_to(l, separator = '-')
+  def no_vowels_except_after(separator, segment_length) =
+    split(separator).
+      map { |s| s.no_nonleading_vowels(segment_length) }.
+      join(separator)
+
+  def segments_truncated_to(segment_length, separator)
     split(separator).map do |s|
-      s.integer? ? s.reverse : s[0, l]
+      s.integer? ? s.reverse : s[0, segment_length]
     end.join(separator)
   end
 
-  def no_nonleading_vowels =
-    length > 4 ? "#{chr}#{self[1..-1].no_vowels}" : self
+  def without_separator(separator) = gsub(separator, '')
+
+  def enforce(l) = self[0, l - 1]
+
+  def no_nonleading_vowels(segment_length) =
+    length > segment_length ? "#{chr}#{self[1..-1].no_vowels}" : self
 
   def no_vowels = gsub(/[aeiouy]/i, '')
   def integer? = to_i.to_s == self
-  def without_delimiter(separator = '-') = gsub(separator, '')
 
 end
